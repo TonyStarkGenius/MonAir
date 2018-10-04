@@ -6,7 +6,7 @@ void PM_Get(const char* str, char* PM2_5, char* PM10)
 	if(strstr(str,"2"))
 	{
 		pos1=strstr(str,"2");
-		if(pos1+1=="=")
+		if(pos+1=='=')
 		{
 			strncpy(PM2_5,pos1+6,2);
 			strncpy(PM10,pos1+8,2);
