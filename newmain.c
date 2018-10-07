@@ -8,5 +8,6 @@ while(1)
 {
 Transmit_PM_USART2();//Transmit data about PM Concentration to USART2
 Delay(3000);//Delay 3 seconds
+RX1_FLAG_END_LINE=0;
 }
 }
