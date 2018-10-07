@@ -144,3 +144,26 @@ void My_USART2_Send_StrRN(char * string)
   My_USART2_Send('\r');
   My_USART2_Send('\n');
 }
+
+void USART1_IRQHandler(void)
+{
+    if (USART1->SR & USART_SR_RXNE)
+    {
+            RX1c = USART_ReceiveData(USART1);
+            RX1_BUF[RX1i] = RX1c;
+            RX1i++;
+            if (RX1i > RX1_BUF_SIZE-1) 
+						{
+							PM_Get(RX1_BUF,PM_2_5,PM_10);
+              clear_RXBuffer();
+            }
+            RX1_FLAG_END_LINE = 1;
+     }
+}
+
+void clear_RXBuffer(void) 
+{
+  for (RX1i=0; RX1i<RX1_BUF_SIZE; RX1i++)
+    RX1_BUF[RX1i] = '\0';
+  RX1i = 0;
+}
