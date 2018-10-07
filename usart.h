@@ -2,7 +2,7 @@
 #define __USART_H
 	 
 #include "main.h"
-#include "stdint.h"
+#include "stdint.h"/*To enable use uint_t*/
 
 #define RX1_BUF_SIZE 32
 volatile char RX1_FLAG_END_LINE = 0;
