@@ -28,3 +28,12 @@ void Convert_PM(char* PM1, char* PM2)
 	}
 	PM2[5]='\0';
 }
+
+void Transmit_PM_USART2(void)
+{
+	My_USART2_Send_StrRN("PM Concentration in mcg/m^3:");
+	My_USART2_Send_Str("PM2.5: ");
+	My_USART2_Send_StrRN(PM_2_5_C);
+	My_USART2_Send_Str("PM10: ");
+	My_USART2_Send_StrRN(PM_10_C);
+}
