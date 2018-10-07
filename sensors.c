@@ -3,8 +3,8 @@
 void PM_Get(char* str,char* PM2_5,char* PM10)
 {
 	char* pos1;
-		pos1=strstr(str,"2");
-		if(!strncmp(pos1+1,"=",1))
+		pos1=strstr(str,"2");//find 0x32 in str
+		if(!strncmp(pos1+1,"=",1))//if 0x3D is after 0x32(start signal from sensor)
 		{
 			strncpy(PM2_5,pos1+8,1);
 			strncpy(PM10,pos1+10,1);
