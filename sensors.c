@@ -21,9 +21,10 @@ void Convert_PM(char* PM1, char* PM2)
 	INTPM=(INTPM<<8)+INTPML;
 	int del = 1;
 	int del1 = 10;
-	for (int i = 1;(INTPM / del) >= 1;i--)
+	for (int i = 4;(INTPM / del) >= 1;i--)
 	{
 		PM2[i] = ((INTPM / del) % del1) + 48;
 		del *= 10;
 	}
+	PM2[5]='\0';
 }
