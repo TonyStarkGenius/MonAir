@@ -10,6 +10,7 @@ char PM_2_5_C[6];
 char PM_10_C[6];
 
 void PM_Get(char* str , char* PM2_5 , char* PM10);
-void Convert_PM(char* PM);
+void Convert_PM(char* PM1, char* PM2);
+
 
 #endif /* __SENSORS_H */
