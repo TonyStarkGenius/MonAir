@@ -1,8 +1,8 @@
 #include "sensors.h"
 
-void PM_Get(char* str,char*PM2_5,char*PM10)
+void PM_Get(char* str,char* PM2_5,char* PM10)
 {
-	const char* pos1;
+	char* pos1;
 		pos1=strstr(str,"2");
 		if(!strncmp(pos1+1,"=",1))
 		{
