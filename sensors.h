@@ -4,6 +4,10 @@
 #include "main.h"
 #include "stdint.h"
 
-void PM_Get(const char* str , char* PM2_5 , char* PM10);
+char PM_2_5[4];
+char PM_10[4];
 
-#endif /* __USART_H */
+void PM_Get(char* str , char* PM2_5 , char* PM10);
+void Convert_PM(char* PM);
+
+#endif /* __SENSORS_H */
