@@ -4,8 +4,8 @@
 #include "main.h"
 #include "stdint.h"
 
-char PM_2_5[4];
-char PM_10[4];
+char PM_2_5[3];
+char PM_10[3];
 
 void PM_Get(char* str , char* PM2_5 , char* PM10);
 void Convert_PM(char* PM);
