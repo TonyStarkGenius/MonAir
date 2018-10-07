@@ -13,16 +13,19 @@ volatile char RX1_BUF[RX1_BUF_SIZE];
 void My_USART1_Init(void);
 void My_USART2_Init(void);
 
+/*Send byte to USART*/
 void My_USART1_Send(uint8_t data);
 void My_USART2_Send(uint8_t data);
 
+/*Send array to USART !!Sending will be finish when array have '\0' component!! */ 
 void My_USART1_Send_Str(char* string); 
 void My_USART2_Send_Str(char* string); 
-	 
+
+/*Send array with \r\n in the end*/
 void My_USART1_Send_StrRN(char* string);
 void My_USART2_Send_StrRN(char* string);
 
-void clear_RXBuffer(void);
-void USART1_IRQHandler(void);
+void clear_RXBuffer(void);/*Clears RX1_BUF*/
+void USART1_IRQHandler(void);/*USART1 Interrupt function*/
 
 #endif /* __USART_H */
