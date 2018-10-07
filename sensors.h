@@ -1,7 +1,8 @@
 #ifndef __SENSORS_H
 #define __SENSORS_H
 
-#include "main.h"
+#include "stm32f4xx.h"
+#include "usart.h"
 #include "stdint.h"
 
 char PM_2_5[3];
