@@ -7,6 +7,7 @@
 #include "stm32f4xx_usart.h"
 #include "misc.h"
 #include "stdint.h"
+#include "afunctions.h"
 #include "usart.h"
 #include "sensors.h"
 #include <string.h>
