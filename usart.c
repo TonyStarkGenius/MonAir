@@ -1,11 +1,13 @@
 #include "usart.h"
 
-void My_USART1_Init(void)
+void My_USART1_Init(uint8_t config)
 {
 	//Enable periph interfaces
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
   RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
 	//interrupts configuration
+	if(config==true)
+	{
 	__enable_irq();
 	NVIC_InitTypeDef NVIC_InitStructure;
  
@@ -14,9 +16,10 @@ void My_USART1_Init(void)
   NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
   NVIC_Init(&NVIC_InitStructure);
-	
+	//enable interrupts for receiving
 	USART1->CR1 |= USART_CR1_RXNEIE;
 	USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
+	}
 	//enable USART function on pins
 	GPIO_PinAFConfig(GPIOA, GPIO_PinSource10, GPIO_AF_USART1);
   GPIO_PinAFConfig(GPIOA, GPIO_PinSource9, GPIO_AF_USART1);
@@ -45,12 +48,14 @@ void My_USART1_Init(void)
 	
 }
 
-void My_USART2_Init(void)
+void My_USART2_Init(uint8_t config)
 {
 	//enable periph interfaces
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
   RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
 	//interrupts config
+	if(config==true)
+	{
 	__enable_irq();
 	NVIC_InitTypeDef NVIC_InitStructure;
  
@@ -59,9 +64,10 @@ void My_USART2_Init(void)
   NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
   NVIC_Init(&NVIC_InitStructure);
-	
+	//enable interrupts for receiving
 	USART2->CR1 |= USART_CR1_RXNEIE;
 	USART_ITConfig(USART2, USART_IT_RXNE, ENABLE);
+	}
 	//enable USART function on pins
 	GPIO_PinAFConfig(GPIOA, GPIO_PinSource3, GPIO_AF_USART1);
   GPIO_PinAFConfig(GPIOA, GPIO_PinSource2, GPIO_AF_USART1);
@@ -149,10 +155,10 @@ void My_USART2_Send_StrRN(char* string)
 
 void USART1_IRQHandler(void)
 {
-    if (USART1->SR & USART_SR_RXNE)//if recieve data from RX1
+    if (USART1->SR & USART_SR_RXNE)//if receive data from RX1
     {
-            RX1c = USART_ReceiveData(USART1);//storage recieved byte in RX1c
-            RX1_BUF[RX1i] = RX1c;//insert recieved dara to buffer
+            RX1c = USART_ReceiveData(USART1);//storage received byte in RX1c
+            RX1_BUF[RX1i] = RX1c;//insert received dara to buffer
             RX1i++;
             if (RX1i > RX1_BUF_SIZE-1) //if RX1_BUF is full
 						{
