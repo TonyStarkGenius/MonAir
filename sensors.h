@@ -11,6 +11,6 @@ char PM_10_C[6];
 
 void PM_Get(char* str , char* PM2_5 , char* PM10);/* str- PM-Sensor Data, PM2_5- Array to save data of PM2.5 in INT, PM10- Array to save data of PM10 in INT*/ 
 void Convert_PM(char* PM1, char* PM2);/* PM1- Array containing INT data, PM2- Array to copy numbers from PM1 in CHAR */
-
+void Transmit_PM_USART2(void);
 
 #endif /* __SENSORS_H */
