@@ -7,6 +7,6 @@ My_USART2_Init(0);//Enable USART2 without interrupts
 while(1)
 {
 Transmit_PM_USART2();//Transmit data about PM Concentration to USART2
-
+Delay(3000);//Delay 3 seconds
 }
 }
