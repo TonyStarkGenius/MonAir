@@ -163,6 +163,9 @@ void USART1_IRQHandler(void)
             if (RX1i > RX1_BUF_SIZE-1) //if RX1_BUF is full
 						{
 							PM_Get(RX1_BUF,PM_2_5,PM_10);//Get PM parameters
+		    //convert PM parametres to char
+		    Convert_PM(PM_2_5,PM_2_5_C);
+		    Convert_PM(PM_10,PM_10_C);
               clear_RXBuffer();
             }
             RX1_FLAG_END_LINE = 1;
