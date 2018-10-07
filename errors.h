@@ -4,6 +4,6 @@
 #include "main.h"
 #include "stdlib.h"
 
-void Error_Trap(void);//Stop programm and show what error occured
+void Error_Trap(void);//Show what error occured
 
 #endif /* __MAIN_H */
