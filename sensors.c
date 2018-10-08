@@ -18,12 +18,19 @@ void Convert_PM(char* PM1, char* PM2)
 {
 	uint16_t INTPM=(int)PM1[0];
 	uint8_t INTPML=(int)PM1[1];
-	INTPM=(INTPM<<8)+INTPML;
+	INTPM=(INTPM<<8)+INTPML;//keep data of PM value in INT
 	int del = 1;
 	int del1 = 10;
-	for (int i = 4;(INTPM / del) >= 1;i--)
+	int delt=1;
+	int var;
+	while(INTPM/delt>=1)//to know how many ciphers we have in number
 	{
-		PM2[i] = ((INTPM / del) % del1) + 48;
+		var++;
+		delt*=10;
+	}
+	for (int i = var;(INTPM / del) >= 1;i--)
+	{
+		PM2[i] = ((INTPM / del) % del1) + 48;//convert INT cipher to the same CHAR
 		del *= 10;
 	}
 	PM2[5]='\0';
