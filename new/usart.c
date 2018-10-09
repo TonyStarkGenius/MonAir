@@ -192,6 +192,15 @@ void My_USART_Send_Str(char* string,char usart)
   i++;
  }
  }
+	if (usart==3)
+	{
+ uint8_t i=0;
+ while(string[i]) 
+ {
+  My_USART_Send(string[i],3);
+  i++;
+ }
+ }
 }
 
 void My_USART_Send_StrRN(char* string,char usart) 
