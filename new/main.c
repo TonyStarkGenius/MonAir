@@ -3,10 +3,11 @@
 int main(void)
 {
 	My_USART1_Init(1);//Enable USART1 with interrupts
-	My_USART2_Init(0);//Enable USART2 without interrupts
+	My_USART2_Init(1);//Enable USART2 without interrupts
+	SetUP_GSM_GPRS("www.ab.kyivstar.net","\0","\0");
 	while(1)
 	{
-		Transmit_PM_USART2();//Transmit data about PM Concentration to USART2
-		Delay(3000);//Delay 3 seconds
+		Send_MonAir_Data();
+		Delay(60000);//Delay 60 seconds
 	}
 }
