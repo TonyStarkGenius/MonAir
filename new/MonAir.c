@@ -1,6 +1,6 @@
 #include "MonAir.h"
 
-void Send_MonAir_Data(void)
+void Send_MonAir_Data_Thingspeak(void)
 {
 	char str[85];
 	strcpy(str,"https://api.thingspeak.com/update?api_key=2NH271GFFL0J508H&field1=");
