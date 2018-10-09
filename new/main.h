@@ -4,8 +4,8 @@
 #define USART_GSM 2//defined number of TX USART for GSM
 #define USART_GSM_RX USART2//defined RX USART for GSM
 #define USART_PM USART1//defined RX USART for PM sensor
-#define ERROR_USART 3
-#define NAME_OF_VAR(VAR) #VAR
+#define ERROR_USART 3//defined number of TX USAET for Errors
+#define NAME_OF_VAR(VAR) #VAR//returns name of variable
 
 #include "stm32f4xx.h"
 #include "afunctions.h"
