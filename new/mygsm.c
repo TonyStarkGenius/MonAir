@@ -15,5 +15,5 @@ void Send_to_TCP(char* ip,char* port,char* data)
 {
 	TCP_Start(ip,port);
 	//IP fuction
-	TCP_Send_Data(PM_2_5_C);
+	TCP_Send_Data(data);
 }

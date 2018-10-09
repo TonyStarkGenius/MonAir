@@ -80,7 +80,7 @@ void TCP_Send_Data(char* data)
 	char GSM_TCP_Send_Error=1;
 	My_USART_Send_StrRN("AT+CIPSEND",USART_GSM);
 	//if(Send_Data_FLAG==1){
-	My_USART_Send_Str(data,USART_GSM);
+	My_USART_Send_StrRN(data,USART_GSM);
 	My_USART_Send(0x1A,USART_GSM);
 	Error_Trap(RXGSM_OK_FLAG,GSM_TCP_Send_Error);
 	//}
