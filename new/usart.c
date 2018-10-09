@@ -103,6 +103,54 @@ void My_USART2_Init(uint8_t config)
   USART_Cmd(USART2, ENABLE);
 	
 }
+void My_USART3_Init(uint8_t config)
+{
+	//Enable periph interfaces
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
+  RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART3, ENABLE);
+	//interrupts configuration
+	if(config)
+	{
+	__enable_irq();
+	NVIC_InitTypeDef NVIC_InitStructure;
+ 
+  NVIC_InitStructure.NVIC_IRQChannel = USART3_IRQn;
+  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;
+  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
+  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+  NVIC_Init(&NVIC_InitStructure);
+	//enable interrupts for receiving
+	USART3->CR1 |= USART_CR1_RXNEIE;
+	USART_ITConfig(USART3, USART_IT_RXNE, ENABLE);
+	}
+	//enable USART function on pins
+	GPIO_PinAFConfig(GPIOB, GPIO_PinSource11, GPIO_AF_USART3);
+  GPIO_PinAFConfig(GPIOB, GPIO_PinSource10, GPIO_AF_USART3);
+	//pins config
+	GPIO_InitTypeDef GPIO_InitStructure;
+	
+	
+	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_Init(GPIOB, &GPIO_InitStructure);
+	
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11;
+  GPIO_Init(GPIOB, &GPIO_InitStructure);
+	
+	//usart config
+	USART_InitTypeDef USART_InitStructure;
+	
+	
+	USART_StructInit(&USART_InitStructure);//9600 bod, 8 bits, 1 stop bit, no parity
+	USART_Init(USART3, &USART_InitStructure);
+  USART_Cmd(USART3, ENABLE);
+	
+}
+
 
 void My_USART_Send(uint8_t data,char usart)
 {
