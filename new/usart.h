@@ -19,8 +19,7 @@ void My_USART1_Init(uint8_t config);
 void My_USART2_Init(uint8_t config);
 
 /*Send byte to USART*/
-void My_USART1_Send(uint8_t data);
-void My_USART2_Send(uint8_t data);
+void My_USART_Send(uint8_t data,char usart);
 
 /*Send array to USART !!Sending will be finish when array have '\0' component!!, usart-number of USART to send*/ 
 void My_USART_Send_Str(char* string,char usart); 

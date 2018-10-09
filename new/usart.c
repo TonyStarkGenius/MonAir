@@ -104,18 +104,20 @@ void My_USART2_Init(uint8_t config)
 	
 }
 
-void My_USART1_Send(uint8_t data)
+void My_USART_Send(uint8_t data,char usart)
 {
-	while(!(USART1->SR & USART_SR_TC));
-USART1->DR=data; 
+	if(usart==1)
+	{
+		while(!(USART1->SR & USART_SR_TC));
+		USART1->DR=data;
+	}		
+	if(usart==2)
+	{
+		while(!(USART2->SR & USART_SR_TC));
+		USART2->DR=data;
+	}		
 }
 
-
-void My_USART2_Send(uint8_t data)
-{
-while(!(USART2->SR & USART_SR_TC));
-USART2->DR=data; 
-}
 
 void My_USART_Send_Str(char* string,char usart) 
 {
@@ -124,7 +126,7 @@ void My_USART_Send_Str(char* string,char usart)
  uint8_t i=0;
  while(string[i]) 
  {
-  My_USART1_Send(string[i]);
+  My_USART_Send(string[i],1);
   i++;
  }
  }
@@ -133,7 +135,7 @@ void My_USART_Send_Str(char* string,char usart)
  uint8_t i=0;
  while(string[i]) 
  {
-  My_USART2_Send(string[i]);
+  My_USART_Send(string[i],2);
   i++;
  }
  }
@@ -146,22 +148,22 @@ void My_USART_Send_StrRN(char* string,char usart)
  uint8_t i=0;
  while(string[i]) 
  {
-  My_USART1_Send(string[i]);
+  My_USART_Send(string[i],1);
   i++;
  }
-  My_USART1_Send('\r');
-  My_USART1_Send('\n');
+  My_USART_Send('\r',1);
+  My_USART_Send('\n',1);
  }
 	if (usart==2)
 	{
  uint8_t i=0;
  while(string[i]) 
  {
-  My_USART2_Send(string[i]);
+  My_USART_Send(string[i],2);
   i++;
  }
-  My_USART2_Send('\r');
-  My_USART2_Send('\n');
+  My_USART_Send('\r',2);
+  My_USART_Send('\n',2);
  }
 }
 
