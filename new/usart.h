@@ -17,6 +17,7 @@ extern volatile char RXGSM_OK_FLAG;
 /*if config=0 then interrupts disabled*/
 void My_USART1_Init(uint8_t config);
 void My_USART2_Init(uint8_t config);
+void My_USART3_Init(uint8_t config);
 
 /*Send byte to USART*/
 void My_USART_Send(uint8_t data,char usart);
