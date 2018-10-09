@@ -227,6 +227,17 @@ void My_USART_Send_StrRN(char* string,char usart)
   My_USART_Send('\r',2);
   My_USART_Send('\n',2);
  }
+	if (usart==3)
+	{
+ uint8_t i=0;
+ while(string[i]) 
+ {
+  My_USART_Send(string[i],3);
+  i++;
+ }
+  My_USART_Send('\r',3);
+  My_USART_Send('\n',3);
+ }
 }
 
 void USARTPM_IRQHandler(void)
