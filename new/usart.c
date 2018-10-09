@@ -107,7 +107,7 @@ void My_USART3_Init(uint8_t config)
 {
 	//Enable periph interfaces
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
-  RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART3, ENABLE);
+  RCC_APB1PeriphClockCmd(RCC_APB2Periph_USART3, ENABLE);
 	//interrupts configuration
 	if(config)
 	{
@@ -163,6 +163,11 @@ void My_USART_Send(uint8_t data,char usart)
 	{
 		while(!(USART2->SR & USART_SR_TC));
 		USART2->DR=data;
+	}		
+	if(usart==3)
+	{
+		while(!(USART3->SR & USART_SR_TC));
+		USART3->DR=data;
 	}		
 }
 
