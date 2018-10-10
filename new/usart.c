@@ -1,18 +1,17 @@
 #include "usart.h"
 
-volatile char RXPMi=0;
-volatile char RXPMc;
-volatile char RXPM_BUF[RXPM_BUF_SIZE];
-volatile char RXGSMi=0;
-volatile char RXGSMc;
-volatile char RXGSM_BUF[RXGSM_BUF_SIZE];
-volatile char RXGSM_OK_FLAG=0;
+char RXPMi=0;
+char RXPMc;
+char RXPM_BUF[RXPM_BUF_SIZE];
+char RXGSMi=0;
+char RXGSMc;
+char RXGSM_BUF[RXGSM_BUF_SIZE];
+char RXGSM_OK_FLAG=0;
 
 void My_USART1_Init(uint8_t config)
 {
 	//Enable periph interfaces
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
-  RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);
+  RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1|RCC_APB2Periph_GPIOA, ENABLE);
 	//interrupts configuration
 	if(config)
 	{
@@ -28,23 +27,17 @@ void My_USART1_Init(uint8_t config)
 	USART1->CR1 |= USART_CR1_RXNEIE;
 	USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
 	}
-	//enable USART function on pins
-	GPIO_PinAFConfig(GPIOA, GPIO_PinSource10, GPIO_AF_USART1);
-  GPIO_PinAFConfig(GPIOA, GPIO_PinSource9, GPIO_AF_USART1);
 	//pins config
 	GPIO_InitTypeDef GPIO_InitStructure;
 	
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_Init(GPIOA, &GPIO_InitStructure);
 	
-	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9;
-  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-  GPIO_Init(GPIOA, &GPIO_InitStructure);
-	
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
-  GPIO_Init(GPIOA, &GPIO_InitStructure);
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+    GPIO_Init(GPIOA, &GPIO_InitStructure);
 	
 	//usart config
 	USART_InitTypeDef USART_InitStructure;
@@ -59,8 +52,8 @@ void My_USART1_Init(uint8_t config)
 void My_USART2_Init(uint8_t config)
 {
 	//enable periph interfaces
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
-  RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
 	//interrupts config
 	if(config)
 	{
@@ -76,23 +69,18 @@ void My_USART2_Init(uint8_t config)
 	USART2->CR1 |= USART_CR1_RXNEIE;
 	USART_ITConfig(USART2, USART_IT_RXNE, ENABLE);
 	}
-	//enable USART function on pins
-	GPIO_PinAFConfig(GPIOA, GPIO_PinSource3, GPIO_AF_USART1);
-  GPIO_PinAFConfig(GPIOA, GPIO_PinSource2, GPIO_AF_USART1);
 	//pin config
 	GPIO_InitTypeDef GPIO_InitStructure;
 	
 	
-	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
-  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-  GPIO_Init(GPIOA, &GPIO_InitStructure);
-	
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
-  GPIO_Init(GPIOA, &GPIO_InitStructure);
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
+		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
+	    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	    GPIO_Init(GPIOA, &GPIO_InitStructure);
+
+	    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
+	    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+	    GPIO_Init(GPIOA, &GPIO_InitStructure);
 	
 	//usart config
 	USART_InitTypeDef USART_InitStructure;
@@ -106,8 +94,8 @@ void My_USART2_Init(uint8_t config)
 void My_USART3_Init(uint8_t config)
 {
 	//Enable periph interfaces
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
-  RCC_APB1PeriphClockCmd(RCC_APB2Periph_USART3, ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
+  RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3, ENABLE);
 	//interrupts configuration
 	if(config)
 	{
@@ -123,23 +111,18 @@ void My_USART3_Init(uint8_t config)
 	USART3->CR1 |= USART_CR1_RXNEIE;
 	USART_ITConfig(USART3, USART_IT_RXNE, ENABLE);
 	}
-	//enable USART function on pins
-	GPIO_PinAFConfig(GPIOB, GPIO_PinSource11, GPIO_AF_USART3);
-  GPIO_PinAFConfig(GPIOB, GPIO_PinSource10, GPIO_AF_USART3);
 	//pins config
 	GPIO_InitTypeDef GPIO_InitStructure;
 	
 	
-	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
-  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-  GPIO_Init(GPIOB, &GPIO_InitStructure);
-	
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11;
-  GPIO_Init(GPIOB, &GPIO_InitStructure);
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
+		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
+	    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	    GPIO_Init(GPIOB, &GPIO_InitStructure);
+
+	    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11;
+	    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+	    GPIO_Init(GPIOB, &GPIO_InitStructure);
 	
 	//usart config
 	USART_InitTypeDef USART_InitStructure;

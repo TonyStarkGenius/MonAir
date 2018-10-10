@@ -6,13 +6,13 @@
 
 #define RXPM_BUF_SIZE 32
 #define RXGSM_BUF_SIZE 100
-extern volatile char RXPMi;
-extern volatile char RXPMc;
-extern volatile char RXPM_BUF[RXPM_BUF_SIZE];
-extern volatile char RXGSMi;
-extern volatile char RXGSMc;
-extern volatile char RXGSM_BUF[RXGSM_BUF_SIZE];
-extern volatile char RXGSM_OK_FLAG;
+extern char RXPMi;
+extern char RXPMc;
+extern char RXPM_BUF[RXPM_BUF_SIZE];
+extern char RXGSMi;
+extern char RXGSMc;
+extern char RXGSM_BUF[RXGSM_BUF_SIZE];
+extern char RXGSM_OK_FLAG;
 
 /*if config=0 then interrupts disabled*/
 void My_USART1_Init(uint8_t config);
