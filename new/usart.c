@@ -4,9 +4,10 @@ char RXPMi=0;
 char RXPMc;
 char RXPM_BUF[RXPM_BUF_SIZE];
 char RXGSMi=0;
-char RXGSMc;
-char RXGSM_BUF[RXGSM_BUF_SIZE];
-char RXGSM_OK_FLAG=0;
+volatile char RXGSMc;
+volatile char RXGSMe;
+volatile char RXGSM_BUF[RXGSM_BUF_SIZE];
+volatile char RXGSM_OK_FLAG=0;
 
 void My_USART1_Init(uint8_t config)
 {
@@ -57,7 +58,7 @@ void My_USART2_Init(uint8_t config)
 	//interrupts config
 	if(config)
 	{
-	__enable_irq();
+	//__enable_irq();
 	NVIC_InitTypeDef NVIC_InitStructure;
  
   NVIC_InitStructure.NVIC_IRQChannel = USART2_IRQn;
@@ -66,7 +67,7 @@ void My_USART2_Init(uint8_t config)
   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
   NVIC_Init(&NVIC_InitStructure);
 	//enable interrupts for receiving
-	USART2->CR1 |= USART_CR1_RXNEIE;
+	//USART2->CR1 |= USART_CR1_RXNEIE;
 	USART_ITConfig(USART2, USART_IT_RXNE, ENABLE);
 	}
 	//pin config
@@ -75,7 +76,7 @@ void My_USART2_Init(uint8_t config)
 	
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
 		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
-	    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
 	    GPIO_Init(GPIOA, &GPIO_InitStructure);
 
 	    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
@@ -223,7 +224,7 @@ void My_USART_Send_StrRN(char* string,char usart)
  }
 }
 
-void USARTPM_IRQHandler(void)
+void USART1_IRQHandler(void)
 {
     if (USART_PM->SR & USART_SR_RXNE)//if receive data from RXPM
     {
@@ -241,17 +242,19 @@ void USARTPM_IRQHandler(void)
     }
 }
 
-void USARTGSM_IRQHandler(void)
+void USART2_IRQHandler(void)
 {
-    if (USART_GSM_RX->SR & USART_SR_RXNE)//if receive data from RXGSM
+    if ((USART2->SR & USART_FLAG_RXNE) != (u16)RESET)//if receive data from RXGSM
     {
       RXGSMc = USART_ReceiveData(USART_GSM_RX);//storage received byte in RXGSMc
       RXGSM_BUF[RXGSMi] = RXGSMc;//insert received dara to buffer
+      My_USART_Send(RXGSM_BUF[RXGSMi], 2);
       RXGSMi++;
-      if (strstr(RXGSM_BUF,"OK")) //if received from gsm OK
-			{
-				RXGSM_OK_FLAG=1;
-				Parse_GSM_Data(RXGSM_BUF);//Parse for some usable data received
+
+      if (RXGSM_BUF[RXGSMi-1]==0x0A) //if received from gsm OK
+	  {
+    	  RXGSMe=RXGSMi;
+		Parse_GSM_Data(RXGSM_BUF);//Parse for some usable data received
         clear_RXBuffer(RXGSM_BUF,RXGSMi,RXGSM_BUF_SIZE);
       }
     }

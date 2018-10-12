@@ -10,9 +10,10 @@ extern char RXPMi;
 extern char RXPMc;
 extern char RXPM_BUF[RXPM_BUF_SIZE];
 extern char RXGSMi;
-extern char RXGSMc;
-extern char RXGSM_BUF[RXGSM_BUF_SIZE];
-extern char RXGSM_OK_FLAG;
+extern volatile char RXGSMe;
+extern volatile char RXGSMc;
+extern volatile char RXGSM_BUF[RXGSM_BUF_SIZE];
+extern volatile char RXGSM_OK_FLAG;
 
 /*if config=0 then interrupts disabled*/
 void My_USART1_Init(uint8_t config);
@@ -29,7 +30,7 @@ void My_USART_Send_Str(char* string,char usart);
 void My_USART_Send_StrRN(char* string,char usart);
 
 void clear_RXBuffer(char* RX_BUF, char RXi,char RX_BUF_SIZE);/*RX_BUF- buffer to clear, RXi- element counter of this buffer, RX_BUF_SIZE- size of this buffer*/
-void USARTPM_IRQHandler(void);/*USARTPM Interrupt function*/
-void USARTGSM_IRQHandler(void);/*USARTGSM Interrupt function*/
+void USART1_IRQHandler(void);/*USARTPM Interrupt function*/
+void USART2_IRQHandler(void);/*USARTGSM Interrupt function*/
 
 #endif /* __USART_H */
