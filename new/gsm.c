@@ -1,9 +1,15 @@
 #include "gsm.h"
 
+volatile char TCP_CONNECT_FLAG=1;
+
 void Parse_GSM_Data(char* RX_BUF)
 {
 	if(RX_BUF[RXGSMe-4]=='O'&&RX_BUF[RXGSMe-3]=='K')
-	RXGSM_OK_FLAG=1;
+	{
+		RXGSM_OK_FLAG=1;
+		if(RX_BUF[RXGSMe-7]=='C'&&RX_BUF[RXGSMe-6]=='T')
+			TCP_CONNECT_FLAG=1;
+	}
 }
 
 void USART_Connection(void)
@@ -82,6 +88,7 @@ void GPRS_UP(void)
 
 void TCP_Start(char* ip,char* port)
 {
+	TCP_CONNECT_FLAG=0;
 	char GSM_TCP_Start_Error=17;
 	My_USART_Send_Str("AT+CIPSTART=\"TCP\",\"",USART_GSM);
 	My_USART_Send_Str(ip,USART_GSM);

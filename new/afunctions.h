@@ -3,7 +3,7 @@
 
 #include "main.h"
 
-#define CURRENT_TIMER               ((TIM_TypeDef *) TIM1)
+#define CURRENT_TIMER   ((TIM_TypeDef *) TIM1)
 #define CURRENT_FREQ    SystemCoreClock
 
 void Delay(volatile uint32_t delay);//Delay in milliseconds

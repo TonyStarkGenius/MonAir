@@ -3,6 +3,8 @@
 
 #include "main.h"
 
+extern volatile char TCP_CONNECT_FLAG;
+
 void Parse_GSM_Data(char* RX_BUF);/*parser for usable data received from gsm*/
 void USART_Connection(void);/*set usart connection up*/
 void PIN_Status(void);/*receive whether PIN is required*/
